@@ -1,17 +1,20 @@
-var React = require("react"),
+var React = require("react/addons"),
+    PureRenderMixin = React.addons.PureRenderMixin,
     TodoListItem = require("./TodoItem"),
     TodoActions = require("../actions/TodoActions"),
     ReactPropTypes = React.PropTypes;
 
 var MainSection = React.createClass({
+    mixins: [PureRenderMixin],
+    
     propTypes: {
-        todos: ReactPropTypes.array.isRequired
+        todos: ReactPropTypes.object.isRequired
     },
 
     render: function () {
         var todos = [];
 
-        if (this.props.todos.length < 1) {
+        if (this.props.todos.size < 1) {
             return null;
         }
 

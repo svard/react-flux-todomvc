@@ -1,10 +1,13 @@
 var React = require("react/addons"),
+    PureRenderMixin = React.addons.PureRenderMixin,
     TodoActions = require("../actions/TodoActions"),
     TodoTextInput = require("./TodoTextInput"),
     ReactPropTypes = React.PropTypes,
     cx = React.addons.classSet;
 
 var TodoItem = React.createClass({
+    mixins: [PureRenderMixin],
+    
     propTypes: {
         todo: ReactPropTypes.object.isRequired
     },

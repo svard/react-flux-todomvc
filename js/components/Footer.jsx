@@ -1,12 +1,15 @@
-var React = require("react"),
+var React = require("react/addons"),
+    PureRenderMixin = React.addons.PureRenderMixin,
     Router = require("react-router"),
     Link = Router.Link,
     TodoActions = require("../actions/TodoActions"),
     ReactPropTypes = React.PropTypes;
 
 var Footer = React.createClass({
+    mixins: [PureRenderMixin],
+    
     propTypes: {
-        todos: ReactPropTypes.array.isRequired
+        todos: ReactPropTypes.object.isRequired
     },
 
     render: function () {

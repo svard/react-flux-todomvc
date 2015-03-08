@@ -1,59 +1,52 @@
 var AppDispatcher = require("../dispatcher/AppDispatcher"),
     EventEmitter = require("events").EventEmitter,
+    Immutable = require("immutable"),
     assign = require("object-assign");
 
 var CHANGE_EVENT = "change";
 
-var _todos = [];
+var _todos = Immutable.OrderedMap(),
+    TodoRecord = Immutable.Record({
+        id: 0,
+        text: "",
+        complete: false
+    });
 
 function create(text) {
     var id = Date.now();
 
-    _todos.push({
+    _todos = _todos.set(id, new TodoRecord({
         id: id,
-        text: text,
-        complete: false
-    });
+        text: text
+    }));
 }
 
 function destroy(id) {
-    _todos = _todos.filter(function (todo) {
-        return todo.id !== id;
-    });
+    _todos = _todos.delete(id);
 }
 
 function edit(id, text) {
-    _todos = _todos.map(function (todo) {
-        if (todo.id === id) {
-            todo.text = text;
-        }
-
-        return todo;
-    });
+    _todos = _todos.setIn([id, "text"], text);
 }
 
 function toggle(id) {
-    _todos = _todos.map(function (todo) {
-        if (todo.id === id) {
-            todo.complete = !todo.complete;
-        }
-
-        return todo;
+    _todos = _todos.updateIn([id, "complete"], function (complete) {
+        return !complete;
     });
 }
 
 function toggleAll(complete) {
     _todos = _todos.map(function (todo) {
-        todo.complete = complete;
-        return todo;
+        return todo.set("complete", complete);
     });
 }
 
 function clearCompleted() {
-    _todos = _todos.filter(function (todo) {
-        return !todo.complete;
+    _todos = _todos.filterNot(function (todo) {
+        return todo.complete;
     });
 }
+
 
 var TodoStore = assign({}, EventEmitter.prototype, {
     getAll: function () {
@@ -67,8 +60,8 @@ var TodoStore = assign({}, EventEmitter.prototype, {
     },
 
     getAllActive: function () {
-        return _todos.filter(function (todo) {
-            return !todo.complete;
+        return _todos.filterNot(function (todo) {
+            return todo.complete;
         });        
     },
 
