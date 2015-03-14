@@ -1,14 +1,15 @@
-var React = require("react"),
-    Router = require("react-router"),
-    TodoApp = require("./components/TodoApp"),
-    MainSection = require("./components/MainSection"),
-    TodoStore = require("./stores/TodoStore"),
-    Route = Router.Route,
+import React from "react";
+import Router from "react-router";
+import TodoApp from "./components/TodoApp";
+import MainSection from "./components/MainSection";
+import TodoStore from "./stores/TodoStore";
+
+let Route = Router.Route,
     DefaultRoute = Router.DefaultRoute;
 
 function makeMainSection() {
     return React.createClass({
-        render: function () {
+        render() {
             return (<MainSection todos={TodoStore.getAll()} />);
         }
     });
@@ -16,7 +17,7 @@ function makeMainSection() {
 
 function makeCompletedMainSection() {
     return React.createClass({
-        render: function () {
+        render() {
             return (<MainSection todos={TodoStore.getAllCompleted()} />);
         }
     });
@@ -24,20 +25,19 @@ function makeCompletedMainSection() {
 
 function makeActiveMainSection() {
     return React.createClass({
-        render: function () {
+        render () {
             return (<MainSection todos={TodoStore.getAllActive()} />);
         }
     });
 }
 
-var routes = (
+var routes = 
     <Route name="app" path="/" handler={TodoApp}>
         <Route name="completed" path="/completed" handler={makeCompletedMainSection()} />
         <Route name="active" path="/active" handler={makeActiveMainSection()} />
         <DefaultRoute handler={makeMainSection()} />
     </Route>
-);
 
-Router.run(routes, function (Handler) {
+Router.run(routes, Handler => {
     React.render(<Handler />, document.getElementById("todoapp"));
 });

@@ -1,19 +1,20 @@
-var React = require("react/addons"),
-    PureRenderMixin = React.addons.PureRenderMixin,
-    Router = require("react-router"),
+import React from "react/addons";
+import Router from "react-router";
+import TodoActions from "../actions/TodoActions";
+
+let PureRenderMixin = React.addons.PureRenderMixin,
     Link = Router.Link,
-    TodoActions = require("../actions/TodoActions"),
     ReactPropTypes = React.PropTypes;
 
-var Footer = React.createClass({
+export default React.createClass({
     mixins: [PureRenderMixin],
     
     propTypes: {
         todos: ReactPropTypes.object.isRequired
     },
 
-    render: function () {
-        var itemLeft = this.props.todos.reduce(function (sum, todo) {
+    render() {
+        let itemLeft = this.props.todos.reduce((sum, todo) => {
             if (!todo.complete) {
                 return sum + 1;
             }
@@ -21,31 +22,27 @@ var Footer = React.createClass({
             return sum;
         }, 0);
 
-        return (
-            <footer id="footer">
-                <span id="todo-count"><strong>{itemLeft}</strong> item left</span>
-                <ul id="filters">
-                    <li>
-                        <Link to="app">All</Link>
-                    </li>
-                    <li>
-                        <Link to="completed">Completed</Link>
-                    </li>
-                    <li>
-                        <Link to="active">Active</Link>
-                    </li>
-                </ul>
-                <button 
-                    id="clear-completed"
-                    onClick={this._onClick}>
-                </button>
-            </footer>
-        );
+        return <footer id="footer">
+                   <span id="todo-count"><strong>{itemLeft}</strong> item left</span>
+                   <ul id="filters">
+                        <li>
+                            <Link to="app">All</Link>
+                        </li>
+                        <li>
+                            <Link to="completed">Completed</Link>
+                        </li>
+                        <li>
+                            <Link to="active">Active</Link>
+                        </li>
+                    </ul>
+                    <button 
+                        id="clear-completed"
+                        onClick={this._onClick}>
+                    </button>
+                </footer>
     },
 
-    _onClick: function () {
+    _onClick() {
         TodoActions.clearCompleted();
     }
 });
-
-module.exports = Footer;

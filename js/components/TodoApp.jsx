@@ -1,9 +1,10 @@
-var React = require("react"),
-    Router = require("react-router"),
-    Header = require("./Header"),
-    Footer = require("./Footer"),
-    TodoStore = require("../stores/TodoStore"),
-    RouteHandler = Router.RouteHandler;
+import React from "react";
+import Router from "react-router";
+import Header from "./Header";
+import Footer from "./Footer";
+import TodoStore from "../stores/TodoStore";
+
+let RouteHandler = Router.RouteHandler;
 
 function getAllTodos() {
     return {
@@ -11,33 +12,29 @@ function getAllTodos() {
     };
 }
 
-var TodoApp = React.createClass({
-    getInitialState: function () {
+export default React.createClass({
+    getInitialState() {
         return getAllTodos();
     },
 
-    componentDidMount: function () {
+    componentDidMount() {
         TodoStore.addChangeListener(this._onChange);
     },
 
-    componentWillUnmount: function () {
+    componentWillUnmount() {
         TodoStore.removeChangeListener(this._onChange);
     },
 
-    render: function () {
-        return (
-            <div>
-                <Header />
-                <RouteHandler />
-                <Footer
-                    todos={this.state.allTodos} />
-            </div>
-        );
+    render() {
+        return  <div>
+                    <Header />
+                    <RouteHandler />
+                    <Footer
+                        todos={this.state.allTodos} />
+                </div>
     },
 
-    _onChange: function () {
+    _onChange() {
         this.setState(getAllTodos());
     }
 });
-
-module.exports = TodoApp;

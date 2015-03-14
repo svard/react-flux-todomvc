@@ -1,21 +1,21 @@
-var AppDispatcher = require("../dispatcher/AppDispatcher");
+import AppDispatcher from "../dispatcher/AppDispatcher";
 
-var TodoActions = {
-    create: function (text) {
+export default {
+    create(text) {
         AppDispatcher.handleViewAction({
             actionType: "TODO_CREATE",
             text: text
         });
     },
 
-    destroy: function (id) {
+    destroy(id) {
         AppDispatcher.handleViewAction({
             actionType: "TODO_DESTROY",
             id: id
         });
     },
 
-    edit: function (id, text) {
+    edit(id, text) {
         AppDispatcher.handleViewAction({
             actionType: "TODO_EDIT",
             id: id,
@@ -23,25 +23,23 @@ var TodoActions = {
         });
     },
 
-    toggleComplete: function (id) {
+    toggleComplete(id) {
         AppDispatcher.handleViewAction({
             actionType: "TODO_TOGGLE_COMPLETE",
             id: id
         });
     },
 
-    toggleAllCompleted: function (complete) {
+    toggleAllCompleted(complete) {
         AppDispatcher.handleViewAction({
             actionType: "TODO_TOGGLE_ALL_COMPLETED",
             complete: complete 
         });        
     },
 
-    clearCompleted: function () {
+    clearCompleted() {
         AppDispatcher.handleViewAction({
             actionType: "TODO_CLEAR_COMPLETED"
         });        
     }
 };
-
-module.exports = TodoActions;

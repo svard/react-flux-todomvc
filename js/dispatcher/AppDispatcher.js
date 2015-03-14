@@ -1,13 +1,11 @@
-var Dispatcher = require("./Dispatcher"),
-    assign = require("object-assign");
+import Dispatcher from "./Dispatcher";
+import assign from "object-assign";
 
-var AppDispatcher = assign({}, Dispatcher.prototype, {
-    handleViewAction: function (action) {
+export default assign({}, Dispatcher.prototype, {
+    handleViewAction(action) {
         this.dispatch({
             source: "VIEW_ACTION",
             action: action
         });
     }
 });
-
-module.exports = AppDispatcher;

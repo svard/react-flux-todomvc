@@ -1,10 +1,11 @@
-var React = require("react/addons"),
-    PureRenderMixin = React.addons.PureRenderMixin,
+import React from "react/addons";
+
+let PureRenderMixin = React.addons.PureRenderMixin,
     ReactPropTypes = React.PropTypes;
 
-var ENTER_KEY_CODE = 13;
+const ENTER_KEY_CODE = 13;
 
-var TodoTextInput = React.createClass({
+export default React.createClass({
     mixins: [PureRenderMixin],
     
     propTypes: {
@@ -15,32 +16,30 @@ var TodoTextInput = React.createClass({
         onSave: ReactPropTypes.func.isRequired
     },
 
-    getInitialState: function () {
+    getInitialState() {
         return {
             value: this.props.value || ""
         };
     },
 
-    render: function () {
-        return (
-            <input
-                id={this.props.id}
-                className={this.props.className}
-                placeholder={this.props.placeholder}
-                value={this.state.value}
-                autoFocus={true} 
-                onChange={this._onChange}
-                onKeyDown={this._onKeyDown} />
-        );
+    render() {
+        return  <input
+                    id={this.props.id}
+                    className={this.props.className}
+                    placeholder={this.props.placeholder}
+                    value={this.state.value}
+                    autoFocus={true} 
+                    onChange={this._onChange}
+                    onKeyDown={this._onKeyDown} />
     },
 
-    _onChange: function (event) {
+    _onChange(event) {
         this.setState({
             value: event.target.value
         });
     },
 
-    _onKeyDown: function (event) {
+    _onKeyDown(event) {
         if (event.keyCode === ENTER_KEY_CODE) {
             this.props.onSave(this.state.value);
             this.setState({
@@ -49,5 +48,3 @@ var TodoTextInput = React.createClass({
         }
     }
 });
-
-module.exports = TodoTextInput;
