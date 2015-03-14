@@ -1,10 +1,3 @@
-// var React = require("react/addons"),
-//     PureRenderMixin = React.addons.PureRenderMixin,
-//     TodoActions = require("../actions/TodoActions"),
-//     TodoTextInput = require("./TodoTextInput"),
-//     ReactPropTypes = React.PropTypes,
-//     cx = React.addons.classSet;
-
 import React from "react/addons";
 import TodoActions from "../actions/TodoActions";
 import TodoTextInput from "./TodoTextInput";

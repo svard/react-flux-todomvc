@@ -19,7 +19,7 @@ export default React.createClass({
             return null;
         }
 
-        this.props.todos.forEach(function (todo) {
+        this.props.todos.forEach((todo) => {
             todos.push(<TodoListItem key={todo.id} todo={todo} />);
         });
 
